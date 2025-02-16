@@ -14,6 +14,7 @@ const app = express();
 app.use(express.json()); // For parsing JSON requests
 app.use(cors({ origin: "http://localhost:5173", credentials: true })); // Allow frontend access
 app.use(cookieParser()); // Parse cookies
+app.use("/uploads", express.static("uploads"));
 
 // Connect to MongoDB
 mongoose

@@ -1,8 +1,10 @@
 const express = require("express");
-const router = express.Router();
 const Product = require("../models/Product");
+const upload = require("../middleware/multermiddleware"); // Import multer middleware
 
-// ✅ Get All Products (Fetch from DB)
+const router = express.Router();
+
+// ✅ Get All Products
 router.get("/", async (req, res) => {
   try {
     const products = await Product.find();
@@ -12,16 +14,23 @@ router.get("/", async (req, res) => {
   }
 });
 
-
-// ✅ Add New Product
-router.post("/", async (req, res) => {
+// ✅ Add New Product with Image Upload Middleware
+router.post("/", upload.single("image"), async (req, res) => {
   try {
-    const { name, price, size, image, description } = req.body;
-    const newProduct = new Product({ name, price, size, image, description });
+    const { name, price, size} = req.body;
+    const imagePath = req.file ? `/uploads/${req.file.filename}` : "";
+
+    const newProduct = new Product({
+      name,
+      price,
+      size,
+      image: imagePath, // Store image path in DB
+    });
+
     await newProduct.save();
     res.status(201).json(newProduct);
   } catch (error) {
-    res.status(400).json({ message: "Error adding product" });
+    res.status(400).json({ message: "Error adding product", error });
   }
 });
 
