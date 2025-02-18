@@ -24,7 +24,12 @@ mongoose
     console.error("❌ MongoDB Connection Error:", err.message);
     process.exit(1);
   });
-
+  app.get("/", (req, res) => {
+    res.send("Backend is running successfully on Render! 🚀");
+  });
+  
+  // Start the server
+  
 // Import Routes
 const authRoutes = require("./routes/authRoutes");
 app.use("/api/auth", authRoutes);
