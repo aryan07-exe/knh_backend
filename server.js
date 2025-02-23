@@ -29,7 +29,7 @@ mongoose
   });
   
   // Start the server
-
+app.use(cors())
 // Import Routes
 const authRoutes = require("./routes/authRoutes");
 app.use("/api/auth", authRoutes);
