@@ -33,7 +33,7 @@ mongoose
   
   // Start the server
   app.use(cors({
-    origin: '*',
+    origin: ["http://localhost:5173","https://knh-frontend.vercel.app/"],
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type']
 }));
